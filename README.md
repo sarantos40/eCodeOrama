@@ -81,7 +81,7 @@ This is the flow that I consider primary, and we should start from that.
 
 A common way to demonstrate the flow of a scratch program is `CodeOrama`.
 
-[Here](Examples) are also some *codeOrama* examples - there is more material available, but it is in Greek.
+[Here](Examples) and [Here](https://sarantos.no-ip.org/eCodeOrama/Examples) are also some *codeOrama* examples - there is more material available, but it is in Greek.
 Nevertheless, the output layout of *codeOrama*s is quite clear.
 Our output does not have to be exaclty the same, but has to be compatible, beautiful and clear.
 
