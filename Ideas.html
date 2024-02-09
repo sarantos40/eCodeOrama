@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Ideas</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+</head>
+<body>
+<h3 id="implementation-ideas---draft-document">Implementation Ideas - draft document</h3>
+<h4 id="input--data">Input / Data</h4>
+<ul>
+<li>A program consists of many <em>sprites</em> with <em>scripts</em>.</li>
+<li>Each <em>script</em> contains commands, shown as blocks, where the first command specifies under which <em>event</em> the <em>script</em> begins execution.</li>
+<li>Every command (block) is represented in a (<code>json</code>) record.</li>
+<li>We are mostly interested on the blocks that <em>broadcast</em> messages and on the blocks that <em>receive</em> (<code>When I receive ...</code>) them.</li>
+<li>The block contains all relevant parameters (e.g. the <em>message</em>), so that we know which blocks should be connected.</li>
+</ul>
+<p>An obvious approach would be to make a graph, with (some of) the <em>scripts</em> as nodes and connected by the directed edges that correspond to the messages.</p>
+<h4 id="output">Output</h4>
+<p>The main application output result is an interactive and configurable display of the flow of the code</p>
+<p>The application will also produce output of other forms (exports):</p>
+<ul>
+<li>A printed (<code>pdf</code> or other) edition of the flow, like the <em>codeOrama</em> examples provided. This is very essential.</li>
+<li>A linear printed edition of the code, where each receive/broadcast provide additional information on the sources/targets of the message.</li>
+<li>A simple list of all the edges: column / <em>scripts</em> interaction (no graphical output, to be used as input to other tools)</li>
+<li>Export which will be imported to other applications (e.g. design tools, excel, librecalc).</li>
+</ul>
+<h4 id="application-model">Application model</h4>
+<ul>
+<li>The application can be
+<ul>
+<li>web based</li>
+<li>a local application, running on the local OS</li>
+</ul></li>
+</ul>
+<h4 id="the-user-may-be-able-to-select">The user may be able to select:</h4>
+<ul>
+<li>the position order of the equivalent (in calling order) nodes inside a column.</li>
+<li>the order of the columns (so that they have a logical sequence) - which will affect the layout of the connecting edges.
+<ul>
+<li>we may show the number of interconnections among the columns, to help the use to select their order</li>
+</ul></li>
+<li>The way that the <em>scripts</em> are viewed, as a small node, full text, or something in between.
+<ul>
+<li>All or individual nodes can be folded/unfolded to view them better</li>
+</ul></li>
+</ul>
+<p>Use the internal <code>scratch</code> order, if no other order is specified.</p>
+<ul>
+<li>for <em>sprites</em></li>
+<li>for <em>scripts</em></li>
+<li>for <em>event</em> handling (after the topological sort)</li>
+</ul>
+<h4 id="basic-functionality">Basic functionality</h4>
+<p>Here are example details for the basic functionality that is mentioned on the proposed initial implementation steps.</p>
+<p>Basic text based output includes:</p>
+<ul>
+<li>Parse <a href="https://scratch.mit.edu"><code>scratch</code></a> input</li>
+<li>Identify <em>sprites</em>, <em>events</em>, <em>scripts</em>, and commands of interest</li>
+<li>Produce simple text reports, e.g.
+<ul>
+<li><em>sprite</em> broadcasts <em>message</em> to <em>list of sprites</em></li>
+<li><em>sprite</em> receives <em>message</em> from <em>list of sprites</em></li>
+</ul></li>
+<li>Print a narrow text based layout, with the <em>scripts</em> for each <em>sprite</em>
+<ul>
+<li>print on each broadcast a list of receiving <em>sprites</em></li>
+<li>print on each receive a list of broadcasting <em>sprites</em></li>
+</ul></li>
+</ul>
+<p>Basic graphical output includes:</p>
+<ul>
+<li>create a <em>codeOrama</em>, a wider graphical layout with one <em>sprite</em> per column
+<ul>
+<li>initially with side lists of <em>sprites</em> (instead of arrows)</li>
+<li>use with straight line edges / arrows</li>
+<li>use improved edges, that go around the nodes / <em>scripts</em></li>
+<li>with horizontal alignment of <em>events</em></li>
+</ul></li>
+<li>display the <em>scripts</em> as a graphical node on the screen
+<ul>
+<li>using the <a href="https://scratch.mit.edu"><code>scratch</code></a> display shape, text and color.</li>
+</ul></li>
+</ul>
+<p>Basic functionality of an interactive application that displays the resulting graph includes:</p>
+<ul>
+<li>minimize/fold/unfold nodes</li>
+<li>display the edges with their name (<em>message</em>)</li>
+<li>change the node/edge names interactively</li>
+<li>select/store colors and positions</li>
+<li>save / load the user choices / configuration</li>
+</ul>
+<p>Other interactively functionality</p>
+<ul>
+<li>select / focus on specific nodes and edges</li>
+<li>reroute the layout edge interactively</li>
+</ul>
+<h4 id="minimal-configuration">Minimal configuration</h4>
+<ul>
+<li>We have some freedom on the order of the <em>events</em> / <em>scripts</em> inside the column.</li>
+<li>Normally they have a time-sequence order: top parts are executed before the bottom parts, and most edges / arrows are expected to point downwards. We will use a topological order to derive that.</li>
+</ul>
+<p>We should be able to specify at least:</p>
+<ul>
+<li>The order of the <em>sprites</em> / columns</li>
+<li>The order of the <em>events</em> / rows
+<ul>
+<li>This is the global order of all <em>events</em> that apper in all <em>sprites</em></li>
+<li></li>
+</ul></li>
+<li>The order of the <em>scripts</em> inside each cell, if there are many of them</li>
+</ul>
+<h4 id="node-script-drawing">Node (<em>script</em>) drawing</h4>
+<p>Drawing the nodes / <em>scripts</em> / code blocks is important to the readability of the outcome. They should be large enough to be readable Can we use (searchable) text to design and draw the blocks, or do we have to (format/create and) use images? In any case, the individual code lines will use their designed shape and colors.</p>
+<h4 id="some-possible-edge-layouts">Some possible edge layouts:</h4>
+<ul>
+<li>The <em>scripts</em> are connected with edges, usually depicted as lines with arrows.</li>
+<li>There can be many styles of edges.</li>
+<li>We can design for <em>long-distance</em> edges to go around other <em>scripts</em>, with the lines that constitute an edge to be mostly vertical and horizontal (at the bottom, the top or in some middle places of the layout).</li>
+<li>We can design <em>local</em> edges (like edges among the same or adjacent columns), as straight or curved lines.</li>
+<li>The user may be able to modify the route (intermediate points) of an edge.</li>
+</ul>
+<h4 id="layout-remarks">Layout remarks:</h4>
+<ul>
+<li>We do not try to avoid edge intersections, as long as we do not confuse their continuation (e.g. using colors).</li>
+<li>Edge colors obey specific rules, but can be overwritten if needed. We can add more (optional) rules.</li>
+<li>A layout should make obvious the connections of the edges.</li>
+<li>A specific layout may be more appropriate in an interactive tool where the system can (on demand) highlight the edges of interest.</li>
+<li>AI technics may be used to start from a more intuitive initial layout</li>
+</ul>
+<h4 id="challenges">Challenges:</h4>
+<ul>
+<li>Some columns will usually be much longer than the others.</li>
+<li>We should try to save space - to make a (as much as possible) compact view.</li>
+<li>The visualization is affected by the amount of code that we presented.
+<ul>
+<li>for minimal code, the result will be more beautiful and easy to read.</li>
+<li>Otherwise, we should be able to make some compromises. E.g.
+<ul>
+<li>ignore the (global or column) time-sequence alignment requirement.</li>
+<li>distribute the <em>scripts</em> of a long column to two real columns</li>
+<li>relocate long parts of a column to the column bottom (and they will seem like <em>procedure calls</em>)</li>
+<li>fold <em>scripts</em> with a single (super) block, with the appropriate name
+<ul>
+<li>The user may unfold the block interactively, possibly to different levels of expansions</li>
+</ul></li>
+<li>...</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="miscellaneous-layout-details">Miscellaneous layout details</h4>
+<ul>
+<li>(wrap?)long blocks, or extend them to the next column, or use a wider column</li>
+<li>arrange objects for best layout (order of objects)</li>
+<li>put <em>events</em> on the left (1st) column</li>
+<li>put objects at the top row (1st or selected costume)</li>
+<li>edges layout with corners</li>
+<li>Show <em>bi-directional edges</em> (<em>double arrows</em> - arrow back from the end) differently
+<ul>
+<li>procedure calls</li>
+<li>broadcast and wait</li>
+<li>broadcast to many and wait (use a hub?)</li>
+</ul></li>
+</ul>
+<h4 id="an-interactive-tool-could">An interactive tool could:</h4>
+<ul>
+<li>change the column order</li>
+<li>change the order of the code inside a column</li>
+<li>add names, icons, ...</li>
+<li>follow edges interactively (e.g. by highlighting)</li>
+<li>change the route of an edge</li>
+<li>have pop-up names for <em>scripts</em> and edges</li>
+<li>(optionally) filter (using different conditions) some of the <em>scripts</em> or edges
+<ul>
+<li>e.g. to those <em>scripts</em>* reachable by an <em>event</em></li>
+<li>or to those that are related to a variable</li>
+<li>or to some <em>sprites</em> only</li>
+</ul></li>
+<li>allow to illumninate or navigate (follow links) for the occurences of selected variables, ...</li>
+<li>save/load the (interactively set) configuration
+<ul>
+<li>to apply it later to the same or a modified program</li>
+<li>to make custom layouts (printed on many pages)</li>
+</ul></li>
+<li>...</li>
+</ul>
+<h4 id="secondary-tool-extensions">Secondary tool extensions</h4>
+<p>Starting from the visualization, we can make a tool that will help the user to understand small or large programs, and trace program execution, event activation or variable usage/assignments on them. On the way, we can think and implement many useful cases. We will deal with them when we have a working prototype.</p>
+<p>The code should be expandable for other programming languages Initially we will focus on <code>scratch</code> version 3, and later we could add options for other <code>scratch</code> extensions, or even other languages, initially for visual / blockly programming.</p>
+<p>When the primary flow is trivial, or when we are focusing on smaller pieces of code (or when using an interactively tool), we can display / focus on the secondary flow: code flow that is already serialized, where we can demonstrate the loops and conditionals.</p>
+<p>Different visualization methods can be available, that will fit to many programming languages.</p>
+<h4 id="software">Software</h4>
+<p>Python has many libraries - explore them to see the ones that can be used.</p>
+<h4 id="contribution">Contribution</h4>
+<p>The proposal has to have some contributions to GFOSS.</p>
+<p>I would point that</p>
+<ul>
+<li>The app will be provided as open source, and everyone will be able to use it and extend it</li>
+<li>The app will be used mainly by the educational community, and mostly by the early programming ages.</li>
+</ul>
+</body>
+</html>

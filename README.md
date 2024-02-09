@@ -1,10 +1,10 @@
 ### eCodeOrama, an educational interactive flow visualization tool for mit scratch programs
 
-#### Summary
+#### Brief explanation
 
-The creation of a tool to visualize and edit the layout of the *event* based *script* flow of a [`scratch`](https://scratch.mit.edu) program, keeping it compatible with the *codeOrama* code layout specification.
-The [`scratch`](https://scratch.mit.edu) programming language will be processed as `json` structures.
-The students can use this flow to better visualize and understand their program, to explain it, to debug it and to design extensions and modifications.
+The project will create a interactive tool to extract, visualize graphically and edit (to improve the presentation of) the layout of the flow of code in blocks / scripts in a mit scratch program and their interaction with any messages or other external events. The tool will use rules to decide on many layout parameters (e.g. the position of the code blocks in the layout, the colors used, etc) but the user will be able to overwrite the default choices. The presentation will be compatible with the codeOrama code layout specification.
+The tool will also promote code understanding, especially to young students that use scratch, and will include debugging aids.
+The students can use this flow to better visualize and understand their program, to explain it to others, to debug it and to design extensions and modifications.
 
 #### Why is it important
 
@@ -22,10 +22,26 @@ mainly the inter-thread communication.
 The input programming language will be processed as `json` structures.
 Communication among different threads and components will be shown explicitly.
 
-#### Related Links
+#### Github of the project
+git@github.com:sarantos40/eCodeOrama.git
 
-  * [Description of *codeOrama* and links by Tassos Ladias](TassosLadias.html)
-  * [Other material in Greek](GreekRef)
+#### Expected Results
+
+A tool to visualize and edit the layout of the event based script flow of a scratch program, keeping it compatible with the codeOrama code layout specification.
+
+#### Knowledge Prerequisites
+
+python, mit scratch, gui development
+
+#### Related bibliography
+
+  * Ladias, A., Mikropoulos, Ar., Ladias, D. & Bellou, I.  «*CodeOrama: A two-dimensional visualization tool for Scratch code to assist young learners' understanding of computer programming*».  Themes in eLearning, Vol 14 (2021).  <http://earthlab.uoi.gr/tel/index.php/themeselearn/article/view/32/18>
+
+  * Λαδιάς Αν., Λαδιάς Δημ.  «**Η αναπαράσταση του αλγορίθμου με τη βοήθεια του κωδικΟράματος σε περιβάλλοντα οπτικού προγραμματισμού**».  Περιοδικό «*Θέματα Επιστημών και Τεχνολογίας στην Εκπαίδευση*», τόμος 9(2), (σελ. 103-117), 2016, ISSN: 1792-8796.  <http://earthlab.uoi.gr/thete/index.php/thete/article/view/265/141>
+
+#### Related Links for codeOrama and tools
+
+  * [Related student notes](https://www.dropbox.com/s/dk2n4plqjsnzago/2015%20Special%20programming%20topics%20in%20Scratch.pdf?e=1&dl=0)
   * https://eproceedings.epublishing.ekt.gr/index.php/cetpe/article/view/3690
   * https://github.com/dgmid/CodeOverview
   * https://blog.ouseful.info/2016/02/18/blockpy-python-blockly-environment/
@@ -35,6 +51,8 @@ Communication among different threads and components will be shown explicitly.
   * https://developers.google.com/blockly/
   * https://en.wikipedia.org/wiki/DOT_(graph_description_language)
   * https://www.graphviz.org/
+  * [Description of *codeOrama* and links by Tassos Ladias](TassosLadias.html)
+  * [Other material in Greek](GreekRef)
 
 #### About the flow
 
@@ -42,6 +60,7 @@ The *primary flow* is, in most cases, the set of threads that run concurrently.
 In `python` we can create threads, but this is not very common.
 We usually start only *main*. 
 Other languages, like MIT [`scratch`](https://scratch.mit.edu) are based on threads and events.
+The [`scratch`](https://scratch.mit.edu) programming language will be processed as `json` structures.
 
 The actual [`scratch`](https://scratch.mit.edu) code is stored in `json` (inside a `zip` file),
 which make the parsing code easier,
@@ -69,15 +88,14 @@ Our output does not have to be exaclty the same, but has to be compatible, beaut
 The Layout of a `CodeOrama` mainly consists of a table where:
 
   * Each column represents a *sprite*
-  * Each rows represents an *enent*
+  * Each rows represents an *event*
       * *events* are
           * messages from (the same or other) *sprites*
           * user interface events (mouse clicks, keystrokes, ...)
-          * calls to user defined functions (secondary / can be disabled)
   * Each cell contains (zero or more) *scripts* (code blocks)
       * the cell contains the any *scripts* of the *sprite* that are called on the *event*
       * all *sprite* *scripts* are put into the appropriate rows
-      * all *enent* inititated *scripts* are put into the appropriate column
+      * all *event* inititated *scripts* are put into the appropriate column
   * We include a header row and a header column that describe them (with texts and icons)
   * Arrows connect the code line that triggers an *event* with the cell / *script* that handles it
       * also creation of *sprite* clones
@@ -98,7 +116,7 @@ The *codeOrama* is often used to provide a higher level of code description,
 but it is constructed manually.
 The idea is to make a tool to create *codeOrama*s (as export / printing operation).
 
-### Getting 
+### Getting Started
 
 The student must be already familiar
 with the programming language and the main tools that he intents to use.
@@ -119,31 +137,38 @@ for each short period of time (e.g. each week).
 that should gradually demonstrate parts of the developed functionality.
 
 Here is an example of such a sequence of milestones:
+ 1. Week 1
+      * Parse `scratch` v3 input, identify main entities and produce simple text lists and reports
+ 1. Week 2
+      * Create a graphical output displaying the *scripts* as graphical nodes on appropriate row (*event*) and column (*sprite*) and the edges that connect them.
+ 1. Week 3
+      * Make an (interactive) graphical application, with basic interaction and configuration (colors, order) and save / load the configuration.
+ 1. Week 4
+      * Implement interactive editing / relocating of *sprites*, *events*, *scripts* and edges.
+ 1. Week 5
+      * Export the layout to `pdf`, `json`, generic `xml`, `xlsx`, `ods`.
+      * Parse `scratch` v2 input
+ 1. Week 6
+      * Prepare and test an initial standalone first version, ready to be used by users.
+ 1. Week 7
+      * Display `scratch` comments and use them to pass special presentation directives
+ 1. Week 8
+      * Identify and implement rules for better placement of nodes and edges, and provide options for their selection.
+ 1. Week 9
+      * identify additional required interactive functionality, ...
+ 1. Week 10
+      * ...
+    
+### More about *codeorama*
 
-Week 1
-  * Parse input, identify main entities and produce simple text lists and reports
-Week 2
-  * Create a graphical output displaying the *scripts* as graphical nodes on appropriate row (*event*) and column (*sprite*) and the edges that connect them.
+### More about this project
 
-Week 3
-  * Make an (interactive) graphical application, with basic interaction and configuration (colors, order) and save / load the configuration.
+[Here](Ideas.html) are some more technical details and implementation ideas / discussion, that one can adopt to his proposal.
 
-Week 4
-  * Identify and implement rules for better placement of nodes and edges, and provide options for their selection.
-
-Week 5
-  * Implement interactive editing / relocating of *sprites*, *events*, *scripts* and edges.
-
-Week 6
-  * Prepare and test an initial standalone first version, ready to be used by others (and .
-
-Week 7
-  * identify additional required interactive functionality, ...
-
-[Here](Ideas.html) are some more technoncal details and implementation ideas / discussion, that one can plan to implement.
-
+Throughout this project, we will monitor and discuss the progress of the project. Tassos Ladias, one of the *codeOrama* designers, participates in the support of this project.
+ 
 For easier code mainenance, `python` is preferred but not required.
 
-Each proposal will specify the implementation language, environment, tools, application model, ...
+Each proposal will specify the implementation language, environment, tools, application model, firsti steps, milestones, ...
 
 You can ask general questions on the forum, and we can discuss specific parts of your proposal on private messages.
